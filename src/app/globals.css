@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  --background: #1a1a2e;
+  --foreground: #eaeaea;
+  --accent: #d4a439;
+  --accent-light: #f0c75e;
+  --surface: #16213e;
+  --surface-light: #1f2f52;
+  --danger: #e74c3c;
+  --success: #2ecc71;
+  --muted: #8892a4;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-light: var(--accent-light);
+  --color-surface: var(--surface);
+  --color-surface-light: var(--surface-light);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+/* Smooth scroll for category nav */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

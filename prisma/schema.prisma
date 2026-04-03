@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  WAITER
+  KITCHEN
+}
+
+enum TableStatus {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+  CLEANING
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  READY
+  SERVED
+  COMPLETED
+  CANCELLED
+}
+
+enum OrderItemStatus {
+  PENDING
+  PREPARING
+  DONE
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  MOBILE
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([role])
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  sortOrder Int        @default(0)
+  isActive  Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  items     MenuItem[]
+
+  @@index([sortOrder])
+}
+
+model MenuItem {
+  id          String      @id @default(cuid())
+  categoryId  String
+  category    Category    @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  name        String
+  description String      @default("")
+  price       Float
+  image       String      @default("")
+  isAvailable Boolean     @default(true)
+  isPopular   Boolean     @default(false)
+  spicyLevel  Int         @default(0)
+  tags        Json        @default("[]")
+  sortOrder   Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+
+  @@index([categoryId])
+  @@index([isAvailable])
+  @@index([sortOrder])
+}
+
+model Table {
+  id        String      @id @default(cuid())
+  number    Int         @unique
+  seats     Int         @default(4)
+  zone      String      @default("A區")
+  status    TableStatus @default(AVAILABLE)
+  qrCode    String      @default("")
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  orders    Order[]
+
+  @@index([status])
+  @@index([zone])
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  tableId      String
+  table        Table       @relation(fields: [tableId], references: [id])
+  orderNumber  String
+  status       OrderStatus @default(PENDING)
+  totalAmount  Float       @default(0)
+  customerNote String      @default("")
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  items        OrderItem[]
+  payment      Payment?
+
+  @@index([tableId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([orderNumber])
+}
+
+model OrderItem {
+  id         String          @id @default(cuid())
+  orderId    String
+  order      Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItemId String
+  menuItem   MenuItem        @relation(fields: [menuItemId], references: [id])
+  quantity   Int             @default(1)
+  unitPrice  Float
+  note       String          @default("")
+  status     OrderItemStatus @default(PENDING)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@index([orderId])
+  @@index([menuItemId])
+  @@index([status])
+}
+
+model Payment {
+  id      String        @id @default(cuid())
+  orderId String        @unique
+  order   Order         @relation(fields: [orderId], references: [id])
+  method  PaymentMethod
+  amount  Float
+  paidAt  DateTime      @default(now())
+
+  @@index([paidAt])
+}
+
+model DailyReport {
+  id           String   @id @default(cuid())
+  date         DateTime @unique @db.Date
+  totalOrders  Int      @default(0)
+  totalRevenue Float    @default(0)
+  topItems     Json     @default("[]")
+  createdAt    DateTime @default(now())
+
+  @@index([date])
+}
+
+model ServiceCall {
+  id        String   @id @default(cuid())
+  tableId   String
+  status    String   @default("PENDING")
+  createdAt DateTime @default(now())
+
+  @@index([status])
+  @@index([createdAt])
+}
