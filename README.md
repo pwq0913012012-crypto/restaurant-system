@@ -60,16 +60,17 @@ npm run db:seed
 npm run dev
 ```
 
-開啟 http://localhost:3000
+商家測試 http://localhost:3000
+
+客人測試 https://kkkkkkkkkk-eight.vercel.app/order/1 (後面數字代表桌號)
 
 ## 預設帳號
 
 | 角色 | 帳號 | 密碼 |
 |------|------|------|
-| 管理者 | admin@restaurant.com | admin123 |
-| 服務生 | waiter1@restaurant.com | waiter123 |
-| 廚房 | kitchen1@restaurant.com | kitchen123 |
-
+| 管理者 | a@a | a |
+| 服務生 | w@w | w |
+| 廚房   | k@k | k |
 ## 主要功能
 
 ### 顧客端
