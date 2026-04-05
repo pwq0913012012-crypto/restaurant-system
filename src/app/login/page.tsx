@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { LogIn } from 'lucide-react'
+import { LogIn, UtensilsCrossed } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 export default function LoginPage() {
@@ -40,20 +40,46 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center p-4 bg-background">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-accent">美味餐廳</h1>
+          <h1 className="text-3xl font-bold text-accent">參考產品</h1>
           <p className="text-muted mt-2">員工登入</p>
+        </div>
+
+        <div className="bg-surface/50 rounded-xl p-4 mb-4 text-xs text-muted border border-surface-light">
+          <div className="text-accent font-medium mb-2">測試帳號</div>
+          <div className="grid grid-cols-[1fr_1fr_1fr] gap-2 pb-1.5 mb-1.5 border-b border-surface-light text-[10px] uppercase tracking-wide">
+            <span>角色</span>
+            <span className="text-center">帳號</span>
+            <span className="text-right">密碼</span>
+          </div>
+          <div className="space-y-1">
+            <div className="grid grid-cols-[1fr_1fr_1fr] gap-2">
+              <span>管理者</span>
+              <span className="font-mono text-center">a</span>
+              <span className="font-mono text-right">a</span>
+            </div>
+            <div className="grid grid-cols-[1fr_1fr_1fr] gap-2">
+              <span>服務生</span>
+              <span className="font-mono text-center">w</span>
+              <span className="font-mono text-right">w</span>
+            </div>
+            <div className="grid grid-cols-[1fr_1fr_1fr] gap-2">
+              <span>廚房</span>
+              <span className="font-mono text-center">k</span>
+              <span className="font-mono text-right">k</span>
+            </div>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-surface rounded-2xl p-6 space-y-4">
           <div>
-            <label className="block text-sm text-muted mb-1">電子郵件</label>
+            <label className="block text-sm text-muted mb-1">帳號</label>
             <input
-              type="email"
+              type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-2.5 bg-surface-light rounded-lg text-foreground placeholder:text-muted focus:outline-none focus:ring-1 focus:ring-accent"
-              placeholder="your@email.com"
+              placeholder="請輸入帳號"
             />
           </div>
           <div>
@@ -76,6 +102,20 @@ export default function LoginPage() {
             {loading ? '登入中...' : '登入'}
           </button>
         </form>
+
+        <div className="mt-4 flex items-center gap-2">
+          <div className="flex-1 h-px bg-surface-light" />
+          <span className="text-xs text-muted">或</span>
+          <div className="flex-1 h-px bg-surface-light" />
+        </div>
+
+        <button
+          onClick={() => router.push('/order/1')}
+          className="w-full mt-4 py-3 rounded-xl border border-accent text-accent font-bold hover:bg-accent/10 transition-colors flex items-center justify-center gap-2"
+        >
+          <UtensilsCrossed className="w-5 h-5" />
+          以客人身份進入
+        </button>
       </div>
     </div>
   )

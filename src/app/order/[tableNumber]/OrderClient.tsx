@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, ShoppingCart, X, Plus, Minus, Trash2, Bell, ChefHat, Clock, CheckCircle2, Send } from 'lucide-react'
+import { Search, ShoppingCart, X, Plus, Minus, Trash2, Bell, ChefHat, Clock, CheckCircle2, Send, ArrowLeft } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useCart } from '@/hooks/useCart'
 import { useSSE } from '@/hooks/useSSE'
@@ -107,9 +107,18 @@ export default function OrderClient({ table, categories, existingOrders }: Props
       {/* Header */}
       <header className="sticky top-0 z-40 bg-surface border-b border-surface-light px-4 py-3">
         <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-accent font-bold text-lg">{process.env.NEXT_PUBLIC_RESTAURANT_NAME || '美味餐廳'}</h1>
-            <span className="text-sm text-muted">桌號 {table.number}</span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => { window.location.href = '/login' }}
+              className="p-2 rounded-full bg-surface-light hover:bg-accent/20 transition-colors"
+              title="返回登入頁"
+            >
+              <ArrowLeft className="w-5 h-5 text-accent" />
+            </button>
+            <div>
+              <h1 className="text-accent font-bold text-lg">{process.env.NEXT_PUBLIC_RESTAURANT_NAME || '美味餐廳'}</h1>
+              <span className="text-sm text-muted">桌號 {table.number}</span>
+            </div>
           </div>
           <div className="flex gap-2">
             {orders.length > 0 && (

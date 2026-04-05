@@ -16,11 +16,11 @@ async function main() {
 
   await prisma.user.createMany({
     data: [
-      { name: '管理員', email: 'a@a', password: adminPassword, role: 'ADMIN' },
-      { name: '王小明', email: 'w@w', password: waiterPassword, role: 'WAITER' },
-      { name: '李小華', email: 'w2@w', password: waiterPassword, role: 'WAITER' },
-      { name: '張大廚', email: 'k@k', password: kitchenPassword, role: 'KITCHEN' },
-      { name: '陳師傅', email: 'k2@k', password: kitchenPassword, role: 'KITCHEN' },
+      { name: '管理員', email: 'a', password: adminPassword, role: 'ADMIN' },
+      { name: '王小明', email: 'w', password: waiterPassword, role: 'WAITER' },
+      { name: '李小華', email: 'w2', password: waiterPassword, role: 'WAITER' },
+      { name: '張大廚', email: 'k', password: kitchenPassword, role: 'KITCHEN' },
+      { name: '陳師傅', email: 'k2', password: kitchenPassword, role: 'KITCHEN' },
     ],
     skipDuplicates: true,
   })
@@ -157,9 +157,9 @@ async function main() {
   console.log('Seed complete!')
   console.log('')
   console.log('Login accounts:')
-  console.log('  Admin:   a@a / a')
-  console.log('  Waiter:  w@w / w')
-  console.log('  Kitchen: k@k / k')
+  console.log('  Admin:   a / a')
+  console.log('  Waiter:  w / w')
+  console.log('  Kitchen: k / k')
 }
 
 main()
